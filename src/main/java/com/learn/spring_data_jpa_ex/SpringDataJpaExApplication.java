@@ -5,6 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Objects;
+import java.util.Optional;
+
 @SpringBootApplication
 public class SpringDataJpaExApplication {
 
@@ -28,9 +31,35 @@ public class SpringDataJpaExApplication {
         s2.setMarks(75);
         s3.setMarks(80);
 
-        //saves the info to database table.
+        //1. saves the info to database table.
         /*studentRepo.save(s1);
-        studentRepo.save(s2);*/
-        studentRepo.save(s3);
+        studentRepo.save(s2);
+        studentRepo.save(s3);*/
+
+        //2. fetch all records from database
+        studentRepo.findAll().forEach(student -> {
+            System.out.print(student.getRollNo() + " ");
+            System.out.print(student.getName()+ " ");
+            System.out.println(student.getMarks());
+        });
+
+        //3. Find by Id (primary key) from database
+        int rollNo = 107;
+        Optional<Student> studentById = studentRepo.findById(rollNo);   //find by Id returns an optional of student, in case that rollNo isn't present in DB so safe null check.
+        String studentName = studentById.orElse(new Student()).getName();
+        System.out.println("Name of student whose rollNo is : " + rollNo + " is " + studentName);
+
+        //2nd way of dealing with optional - better
+        if(studentById.isPresent()) {
+            System.out.println("Name of student whose rollNo is : " + rollNo + " is " + studentName);
+        } else {
+            System.out.println("Roll No not found in database");
+        }
+
+        //3rd way to deal with optional - much better
+        studentById.ifPresentOrElse(
+                student -> System.out.println("Name of student whose rollNo is : " + rollNo + " is " + studentName),
+                () -> System.out.println("Roll No not found in database")
+        );
 	}
 }

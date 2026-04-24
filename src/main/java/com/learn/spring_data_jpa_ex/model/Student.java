@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.util.function.Supplier;
+
 @Component
 @Scope("prototype")    //@Scope with value prototype will create new instance of this class for every new request.
 @Entity    //Treats it as an entity/row of a database
