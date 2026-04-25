@@ -71,11 +71,19 @@ public class SpringDataJpaExApplication {
             System.out.println(student.getMarks());
         });*/
 
-        List<Student> studentsMarks = studentRepo.findByMarksGreaterThan(72);
+        /*List<Student> studentsMarks = studentRepo.findByMarksGreaterThan(72);
         studentsMarks.forEach(student -> {
             System.out.print(student.getRollNo() + " ");
             System.out.print(student.getName()+ " ");
             System.out.println(student.getMarks());
-        });
+        });*/
+
+        //4. Update - a select is fired first to check if row exists, if yes then update, else then create new row.
+        /*s1.setMarks(65);
+        studentRepo.save(s1);*/
+
+        //5. Delete - same here, a select query is fired to check if row exists, if yes, then delete.
+        /*studentRepo.delete(s1);*/
+
 	}
 }
