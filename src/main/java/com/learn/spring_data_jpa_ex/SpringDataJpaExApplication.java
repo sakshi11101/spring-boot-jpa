@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class SpringDataJpaExApplication {
         });
 
         //3. Find by Id (primary key) from database
-        int rollNo = 107;
+        /*int rollNo = 105;
         Optional<Student> studentById = studentRepo.findById(rollNo);   //find by Id returns an optional of student, in case that rollNo isn't present in DB so safe null check.
         String studentName = studentById.orElse(new Student()).getName();
         System.out.println("Name of student whose rollNo is : " + rollNo + " is " + studentName);
@@ -61,5 +62,20 @@ public class SpringDataJpaExApplication {
                 student -> System.out.println("Name of student whose rollNo is : " + rollNo + " is " + studentName),
                 () -> System.out.println("Roll No not found in database")
         );
+*/
+        //3. Find by different parameter of student class rather than ID/primary key.
+        /*List<Student> students = studentRepo.findByName("Kiran");
+        students.forEach(student -> {
+            System.out.print(student.getRollNo() + " ");
+            System.out.print(student.getName()+ " ");
+            System.out.println(student.getMarks());
+        });*/
+
+        List<Student> studentsMarks = studentRepo.findByMarksGreaterThan(72);
+        studentsMarks.forEach(student -> {
+            System.out.print(student.getRollNo() + " ");
+            System.out.print(student.getName()+ " ");
+            System.out.println(student.getMarks());
+        });
 	}
 }
